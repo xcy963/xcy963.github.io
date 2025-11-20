@@ -3,6 +3,12 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from sphinx.highlighting import lexers
+from pygments.lexers.special import TextLexer
+
+# 让 ```txt 也能被当成纯文本高亮，避免 Pygments 报 unknown lexer
+lexers["txt"] = TextLexer()
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 # import sphinx_rtd_theme

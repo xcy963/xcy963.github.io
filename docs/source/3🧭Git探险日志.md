@@ -1,4 +1,4 @@
-# git小土豆
+# 🧭Git探险日志
 
 
 
@@ -14,6 +14,8 @@ git config --global user.email "你的邮箱"
 # 查看当前配置
 git config --list
 ```
+
+- 
 
 ---
 
@@ -260,6 +262,11 @@ build/
 # 临时文件
 *.log
 *.tmp
+linux-0.00/*
+!linux-0.00/head.s
+!linux-0.00/boot.s
+!linux-0.00/Makefile
+#这样可以忽略linux-0.00文件夹下所有的文件,但是会提交linux-0.00/Makefile等三个文件
 
 # VSCode 配置
 .vscode/

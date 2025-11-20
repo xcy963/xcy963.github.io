@@ -34,6 +34,14 @@ body::before {
   border-radius: 12px;
 }
 
+@media screen and (max-width: 899px) {
+  /*  实践发现在手机端会有看不到背景图的bug把一些可能盖满全屏的容器背景也弄透明 */
+  .wy-grid-for-nav,
+  .wy-nav-content-wrap {
+    background: transparent !important;
+  }
+}
+
 /* 调整正文字体、行距好看一点 */
 body,
 div.document {

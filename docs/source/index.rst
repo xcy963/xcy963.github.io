@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-xcy的妙妙屋 documentation
+🏰xcy的妙妙屋 
 =========================
 
 .. Add your content using ``reStructuredText`` syntax. See the
@@ -16,8 +16,9 @@ xcy的妙妙屋 documentation
    :maxdepth: 2
    :caption: 内容:
 
-   1🚀收集妙妙屋的魔法道具
-   2😀xcy的rust奇妙咒语
-   3git小记录
-   test_markdown
-   latex公式
+   1🏰妙妙道具仓库
+   2🎩Rust魔法课堂
+   3🧭Git探险日志
+   4🔧Bochs的急流勇进
+   🧪Markdown舞台彩排
+   📐数学魔法实验室

@@ -26,3 +26,11 @@ pip install typeguard
 ```
 
 - `如果想要添加资源`把图片等资源放到 docs/source/_static/，在 Markdown 里用相对路径引用；自定义样式写在 docs/source/_static/custom.css（已引入）。
+
+## 本地构建加上debug
+
+```bash
+cd docs
+sphinx-autobuild  source/ build/html/
+sphinx-autobuild  source/ build/html/ --host 192.168.43.160 #这样可以指定ip地址
+```
