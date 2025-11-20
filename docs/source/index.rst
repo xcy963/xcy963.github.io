@@ -16,7 +16,8 @@ xcy的妙妙屋 documentation
    :maxdepth: 2
    :caption: 内容:
 
-   2🚀收集妙妙屋的魔法道具
-   3😀xcy的rust奇妙咒语
-   1test_markdown
-   4latex公式
+   1🚀收集妙妙屋的魔法道具
+   2😀xcy的rust奇妙咒语
+   3git小记录
+   test_markdown
+   latex公式

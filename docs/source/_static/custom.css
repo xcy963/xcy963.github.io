@@ -55,42 +55,41 @@ h1, h2, h3 {
 }
 
 /* 让引用块像常见 Markdown 样式一样更醒目 */
-/* NOTE 风格的 blockquote 卡片 */
+/* NOTE 风格的 blockquote 卡片（整体上下窄一点） */
 blockquote {
-  margin: 1.25rem 0;
+  margin: 0.8rem 0;           /* 原来 1.25rem，整体上下间距缩小一点 */
   border-radius: 10px;
   border: 1px solid rgba(37, 99, 235, 0.35);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
-  padding: 0;                 /* 让标题和正文分别控制内边距 */
-  overflow: hidden;           /* 保证圆角对标题也生效 */
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.10);
+  padding: 0;
+  overflow: hidden;
 }
 
-/* 顶部标题栏：!NOTE */
+/* 顶部标题栏：!NOTE —— 上下 padding 收窄 */
 blockquote::before {
   content: "!NOTE";
   display: block;
-  padding: 0.4rem 0.9rem;
-  background: #e110bb1b;        /* 深蓝色标题背景 */
-  color: #000000;             /* 标题文字白色 */
-  font-size: 0.75rem;
+  padding: 0.25rem 0.8rem;    /* 原来 0.4rem 0.9rem，垂直更窄一点 */
+  background: #e110bb1b;
+  color: #000000;
+  font-size: 0.72rem;         /* 字稍微小一丢丢，更显紧凑 */
   font-weight: 600;
   letter-spacing: 0.12em;
-  text-transform: uppercase;  /* 全大写效果 */
+  text-transform: uppercase;
 }
 
-/* 正文区域：浅蓝底 + 文本 */
+/* 正文区域：上下 padding 也减一点 */
 blockquote > * {
   margin: 0;
-  padding: 0.8rem 1.25rem;
-  background: rgba(224, 151, 217, 0.106);        /* 浅蓝色底 */
-  color: #1f2937;             /* 深灰文字 */
+  padding: 0.2rem 1rem;      /* 原来 0.8rem 1.25rem，垂直缩小 */
+  background: rgba(224, 151, 217, 0.106);
+  color: #1f2937;
 }
 
-/* 多段落时，段落之间留一点空隙 */
+/* 多段落间距也缩一点 */
 blockquote > :not(:last-child) {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;      /* 原来 0.3rem */
 }
-
 /* 代码块增强：底色、边框、阴影 */
 .code-block-wrapper {
   position: relative;
