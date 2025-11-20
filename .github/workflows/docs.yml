@@ -1,0 +1,61 @@
+name: Build and Deploy Sphinx Docs
+
+on:
+  push:
+    branches: [ "main" ]   # 每次推 main 分支就自动更新文档
+  workflow_dispatch:        # 支持在 Actions 页面手动触发
+
+permissions:
+  contents: read
+  pages: write      # 允许写入 Pages
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install sphinx
+          pip install myst-parser
+          pip install sphinx-autobuild
+          pip install sphinx-rtd-theme 
+          # 如果有 sphinx 主题或扩展，在这里一起安装，比如：
+          # pip install furo sphinx-autodoc-typehints
+
+      - name: Build Sphinx HTML
+        working-directory: ./docs
+        run: |
+          # rm -rf build
+          make html
+          # 如果你不用 Makefile，可以用：
+          # sphinx-build -b html source build/html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs/build/html   # 这里是 Sphinx 输出目录
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
