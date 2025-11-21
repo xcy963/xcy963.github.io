@@ -76,7 +76,10 @@ language = 'zh_CN'
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
-html_js_files = ['custom.js']
+html_js_files = [
+    'css/custom.js',
+    'css/live2d-init.js',  # Live2D 初始化脚本（动态加载 CDN 依赖）
+]
 
 def setup(app):
-    app.add_css_file('custom.css')  # Sphinx >= 1.8 推荐写法
+    app.add_css_file('css/custom.css')  # Sphinx >= 1.8 推荐写法

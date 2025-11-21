@@ -27,6 +27,10 @@
 
 欢迎来到妙妙屋，这里是 xcy 的小小知识仓库。
 
+.. raw:: html
+
+   <div id="live2d-holder" aria-hidden="true"></div>
+
 .. toctree::
    :maxdepth: 2
    :caption: 专区导航:
@@ -35,5 +39,4 @@
    rust/index2
    git/index3
    操作系统/index4
-
 
