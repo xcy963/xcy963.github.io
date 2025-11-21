@@ -5,6 +5,7 @@
 
 .. toctree::
    :maxdepth: 1
-   :caption: Rust 目录:
+   :caption: 操作系统:
 
    4🔧Bochs的急流勇进
+   1🛠️GDB简单使用
