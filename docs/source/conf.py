@@ -24,13 +24,13 @@ extensions = [
     'sphinx_rtd_theme',
     'myst_parser',
     'sphinx.ext.mathjax',
-    
+    'sphinx_multiversion', 
     
 ]
 
 myst_enable_extensions = ["dollarmath", "amsmath"]
 
-mathjax3_config = {
+mathjax3_config = {#latex的支持
     "tex": {
         "macros": {
             "R": r"\mathbb{R}",
@@ -49,6 +49,27 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 language = 'zh_CN'
+
+# # ------- 多版本相关配置 -------
+
+# # 把多版本侧边栏模板挂到所有页面的侧边栏
+# html_sidebars = {
+#     '**': [
+#         'globaltoc.html',    # 全局目录（可按你喜好删改）
+#         'versions.html',     # ★ 我们马上要创建的模板
+#         'relations.html',
+#         'searchbox.html',
+#     ],
+# }
+
+# # 只包括哪些分支 / 标签，可以按你自己的 Git 习惯改
+# # 例如只构建 main 分支和 vX.Y 这样的 tag：
+# smv_branch_whitelist = r'^(main|master)$'
+# smv_tag_whitelist = r'^v\d+\.\d+$'
+# smv_remote_whitelist = r'^origin$'
+# smv_latest_version = 'main'   # 或 'master'，看你仓库默认分支
+
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

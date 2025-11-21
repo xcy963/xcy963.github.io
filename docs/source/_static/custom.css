@@ -3,6 +3,13 @@ body {
   position: relative;
 }
 
+html,
+body,
+.wy-grid-for-nav,
+.wy-nav-content-wrap {
+  min-height: 100vh; /* 整页至少一屏高，避免底部漏出背景 */
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -32,6 +39,7 @@ body::before {
   background-color: rgba(255, 255, 255, 0.86); /* 稍微透一点，让背景透出 */
   padding: 2rem;
   border-radius: 12px;
+  min-height: 100vh; /* 内容区至少撑满一屏，避免底部露出背景 */
 }
 
 @media screen and (max-width: 899px) {

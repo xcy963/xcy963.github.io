@@ -34,3 +34,31 @@ cd docs
 sphinx-autobuild  source/ build/html/
 sphinx-autobuild  source/ build/html/ --host 192.168.43.160 #这样可以指定ip地址
 ```
+
+## 关于资源引用的说明(图片,文件)
+> 在conf.py里面有`html_static_path = ['_static']`,所有sphinx只会把_static里面的东西复制过去,
+> 为了方便,直接把所有资源放在这个文件夹里面,但是寻址还是相对于文件所在目录的,所以要应用资源的话得
+
+- 图片示范
+```markdown
+目录
+- _static
+- 测试使用
+   - markdown.md
+
+<img src="../_static/img/ubuntu输入法.png" alt="img_miss" style="zoom: 50%;"/>
+<!-- 使用相对于文档的地址 -->
+
+```
+
+> 使用sphinx语法不会有文件不搬家的情况,但是我不喜欢学
+
+```markdown
+{download}`这个是sphinx的写法 <../_static/files/matplotlibcpp.h>`
+```
+
+- 文件示范
+
+```markdown
+<a href="../_static/files/matplotlibcpp.h" download>我更喜欢html语法</a>
+```

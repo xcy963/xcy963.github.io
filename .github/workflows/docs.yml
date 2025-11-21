@@ -31,6 +31,7 @@ jobs:
           pip install --upgrade pip
           pip install sphinx
           pip install myst-parser
+          pip install sphinx-multiversion
           pip install sphinx-autobuild
           pip install sphinx-rtd-theme 
           # 如果有 sphinx 主题或扩展，在这里一起安装，比如：
