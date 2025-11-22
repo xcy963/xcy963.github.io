@@ -27,11 +27,12 @@
    测试使用/index1
    rust/index2
    git/index3
+   RM期间/index3.rst
    操作系统/index4
 
 
 **M-I-C-K-E-Y M-O-U-S-E~~**
-=========================
+===========================
 
 
 
@@ -39,7 +40,7 @@
 
    <button id="live2d-trigger" type="button" class="live2d-trigger-btn" aria-controls="live2d-holder">
      <span class="live2d-trigger-icon" aria-hidden="true"></span>
-     <span class="live2d-trigger-text">这也是妙妙屋的奇妙咒语</span>
+     <span class="live2d-trigger-text">妙妙屋的奇妙咒语</span>
    </button>
 
 .. raw:: html

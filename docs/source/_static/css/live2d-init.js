@@ -22,7 +22,7 @@
   };
 
   const textMap = {
-    ready: "这也是妙妙屋的奇妙咒语",
+    ready: "妙妙屋的奇妙咒语",
     loading: "召唤中...",
     done: "阿尼亚就位",
     error: "召唤失败，点我重试",

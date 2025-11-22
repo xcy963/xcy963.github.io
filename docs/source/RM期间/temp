@@ -1,0 +1,31 @@
+# 🧱 CMake 与构建笔记
+
+> 目标：整理日常 C++ / ROS2 项目中常见的 CMake 用法，理解“目标（target）”及其依赖、include 路径、链接库、编译配置等。
+
+## 魔法目录
+- [跳到 CMake 部分](#Pkg::Target导出目标）)
+
+
+
+### 3.2 现代写法：导出目标（推荐）
+<a id="Pkg::Target导出目标"></a>
+```cmake
+find_package(Eigen3 REQUIRED)
+
+target_link_libraries(my_app
+  PRIVATE
+    Eigen3::Eigen
+)
+```
+
+优点：
+
+* 不需要关心 include 路径和底层库名字；
+* 可与 `PUBLIC` / `PRIVATE` / `INTERFACE` 机制自然结合，自动传播依赖；
+* 跨平台性更好。
+
+> 关于`Pkg::Target`的查找,我先打开源码目录(我们放build的地方),找`**Eigen3Targets.cmake**`文件,比如我的路径是
+> /home/hitcrt/libxcy/eigen-3.4.0/build/Eigen3Targets.cmake,一般命名规则是`{我是库名称}Targets.cmake`,里面会有
+> `# Create imported target Eigen3::Eigen `
+> `add_library(Eigen3::Eigen INTERFACE IMPORTED)`我们照着抄就好
+---
