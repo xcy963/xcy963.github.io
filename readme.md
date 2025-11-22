@@ -63,4 +63,16 @@ sphinx-autobuild  source/ build/html/ --host 192.168.43.160 #这样可以指定i
 <a href="../_static/files/matplotlibcpp.h" download>我更喜欢html语法</a>
 ```
 
-3.8kb
+## 关于live2d的瘦身
+- 主要是把贴图体积将下来
+- 1使用python把图片等比例压缩
+- 然后修改model.json里面的贴图路径即可,
+- 使用压缩工具
+```bash
+pngquant   --quality=55-80   --speed=1   --strip   --force   --ext .png   ANIYA.1024/texture_*.png
+oxipng -o 4 --strip all --alpha ANIYA.1024/texture_*.png #这是用cargo安装的,是rust程序
+
+```
+
+## html
+- 使用标签查找的相当神奇的语言,到时候写个文档

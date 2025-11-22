@@ -11,7 +11,24 @@
 			"ANIYA.1024/texture_05.png"
 		],
 		"Physics": "ANIYA.physics3.json",
-		"DisplayInfo": "ANIYA.cdi3.json"
+		"DisplayInfo": "ANIYA.cdi3.json",
+		"Expressions": [
+			{ "Name": "0", "File": "0.exp3.json" },
+			{ "Name": "1", "File": "1.exp3.json" },
+			{ "Name": "2", "File": "2.exp3.json" },
+			{ "Name": "3", "File": "3.exp3.json" },
+			{ "Name": "4", "File": "4.exp3.json" },
+			{ "Name": "5", "File": "5.exp3.json" },
+			{ "Name": "6", "File": "6.exp3.json" },
+			{ "Name": "7", "File": "7.exp3.json" },
+			{ "Name": "8", "File": "8.exp3.json" },
+			{ "Name": "9", "File": "9.exp3.json" },
+			{ "Name": "Q", "File": "Q.exp3.json" },
+			{ "Name": "t", "File": "t.exp3.json" },
+			{ "Name": "u", "File": "u.exp3.json" },
+			{ "Name": "W", "File": "W.exp3.json" },
+			{ "Name": "y", "File": "y.exp3.json" }
+		]
 	},
 	"Groups": [
 		{

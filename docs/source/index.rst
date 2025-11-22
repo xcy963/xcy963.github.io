@@ -45,4 +45,11 @@
 
 .. raw:: html
 
+   <button id="live2d-expression-btn" type="button" class="live2d-peanut-btn" aria-label="播放花生表情" disabled>
+   
+     <span class="live2d-peanut-icon" aria-hidden="true">🥜</span>
+   </button>
+
+.. raw:: html
+
    <div id="live2d-holder" aria-hidden="true"></div>

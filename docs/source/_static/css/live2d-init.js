@@ -1,6 +1,7 @@
 (function () {
   const holderId = "live2d-holder";
   const triggerId = "live2d-trigger";
+  const expressionButtonId = "live2d-expression-btn";
   let cancelled = false;
   let started = false;
   const isMobile = () => {
@@ -23,13 +24,14 @@
 
   const textMap = {
     ready: "妙妙屋的奇妙咒语",
-    loading: "召唤中...",
-    done: "阿尼亚就位",
+    loading: "MISSION ~",
+    done: "MISSION START!",
     error: "召唤失败，点我重试",
   };
 
   const getHolder = () => document.getElementById(holderId);
   const getTrigger = () => document.getElementById(triggerId);
+  const getExpressionButton = () => document.getElementById(expressionButtonId);
 
   const markCancelled = () => {
     // 页面切走或标签页被隐藏时，不再继续加载，避免导航过程卡顿
@@ -88,8 +90,10 @@
     const holder = getHolder();
     if (!holder) return;
     holder.classList.add("live2d-fallback");
-    holder.dataset.msg = reason || "阿尼亚今天休息~";
+    holder.dataset.msg = reason || "阿尼亚要去找邦德玩~";
     updateTriggerState("done");
+    const expBtn = getExpressionButton();
+    if (expBtn) expBtn.disabled = true;
     hideTriggerSoon();
   };
 
@@ -187,6 +191,31 @@
       app.stage.addChild(model);
       fitModel(app, model);
       window.addEventListener("resize", () => fitModel(app, model));
+
+      // 绑定表情按钮：播放 data-expr-name 对应表情（默认 "t"）
+      const expBtn = getExpressionButton();
+      if (expBtn) {
+        const playExpression = () => {
+          // const name = expBtn.dataset.exprName || "t";
+          model.expression();//什么都不指定会随机
+        };
+        expBtn.disabled = false;
+        expBtn.addEventListener("click", playExpression);
+      }
+
+      // 暴露调试入口，方便在控制台调用表情/动作等
+      const debug = {
+        app,
+        model,
+        setExpression: (name) => model.expression(name),
+        listExpressions: () =>
+          model.internalModel?.settings?.expressions?.map((e) => e.Name),
+        focus: (x, y, instant = false) => model.focus(x, y, instant),
+      };
+      window.live2dDebug = debug;
+      window.live2dModel = model; // 兼容直接使用
+      window.live2dApp = app;
+      console.info("[Live2D] 调试对象已挂载 window.live2dDebug");
     } catch (err) {
       console.warn("[Live2D] 模型加载失败：", err);
       app.destroy(true);
@@ -210,6 +239,9 @@
       holder.removeAttribute("data-msg");
     }
 
+    const expBtn = getExpressionButton();
+    if (expBtn) expBtn.disabled = true;
+
     updateTriggerState("loading");
     const ok = await init();
 
@@ -225,6 +257,11 @@
 
   const setup = () => {
     if (!getHolder()) return; // 非主页无需处理
+
+    const expBtn = getExpressionButton();
+    if (expBtn) {
+      expBtn.disabled = true; // 等模型加载完成后再启用
+    }
 
     const trigger = getTrigger();
     if (trigger) {
