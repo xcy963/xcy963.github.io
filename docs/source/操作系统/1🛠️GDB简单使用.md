@@ -1,5 +1,9 @@
 # 🛠️gdb 简单入门
 
+## 魔法目录,点击可以传送
+
+- <a href="#GDB例子">直接看例子</a>
+
 ## 一、gdb 是什么？
 
 **gdb** 是 GNU 调试器，用来在程序“运行时”观察它的状态，比如：
@@ -370,6 +374,8 @@ gdb 自带帮助：
 
 ---
 
+<a id="GDB例子"></a>
+
 ## 十二、一个最小使用流程总结
 
 日常排 bug 的典型流程可以是：
@@ -379,12 +385,37 @@ g++ -g -O0 main.cpp -o main    # 1. 编译
 gdb ./main                     # 2. 进入 gdb
 (gdb) break main               # 3. 在 main 打断点
 (gdb) run                      # 4. 运行
-(gdb) next / step              # 5. 单步执行
+(gdb) next / step              # 5. 单步执行,可以使用n
 (gdb) print 变量名             # 6. 查看变量
-(gdb) backtrace                # 7. 看调用栈（特别是崩溃时）
+(gdb) x/10  &变量名             # 6. 查看变量
+(gdb) x/10i $rip               # 6. 把当前的指令后面的10个单位打印出来使用i指定格式是指令
+(gdb) backtrace                # 7. 看调用栈（特别是崩溃时），可以知道程序运行到哪里了！！！
 (gdb) quit                     # 8. 退出
 ```
 
 ---
 
 如果你愿意，我也可以根据你正在调试的具体代码，给你写一套**定制版 gdb 调试步骤**（比如你遇到段错误、死循环、输出不对等具体情况），会更贴合你的实际使用。
+
+### 实战
+> 这里选择一个cpp程序,然后使用g++编译,我们解释一下他的汇编
+
+```cpp
+#include<vector>
+int main(){
+    int a = 10; 
+    // char *str[5] = {"12345"};     
+    std::vector<double> temp;
+    temp.push_back(1.0);
+    return 0;
+}
+```
+
+- 编译的指令
+```bash
+g++ -g -O0 1.cpp -o test 
+objdump -d -S -l test > test.txt
+```
+- 说明:这里objdump可以把二进制文件反汇编,方便我们之后查看
+
+
