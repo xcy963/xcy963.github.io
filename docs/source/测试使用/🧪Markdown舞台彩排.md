@@ -7,6 +7,54 @@
 - <a href="#测试跳转">测试跳转html语法,会跳到下面的 a 标签处部分</a>
 <a id="测试跳转"></a>
 
+
+## **发现其实可以在这里引用rst语法**
+> 对比我之前写的引用
+
+```{note}
+这是一个 note。
+```
+
+```{attention} 
+这个是attention。
+```
+
+```{danger}
+hello。
+```
+
+```{warning}
+hello。
+
+```
+
+```{tip}
+hello。
+
+```
+
+```{important}
+hello。
+```
+
+```{caution}
+hello。
+```
+
+
+
+```{error}
+hello。
+```
+
+```{hint}
+hello。
+```
+
+```{admonition} [我是自定义标题]
+hello。
+```
+
 ---
 
 ## 1. 标题（Headings）

@@ -292,8 +292,124 @@ install(
 ament_package()
 ```
 
-> 思路总结：
->
-> * 凡是“能抽象成一个目标（库/可执行/接口）”的，都尽量抽出来；
-> * 所有依赖通过 `target_link_libraries`、`target_include_directories` 等对目标配置；
-> * 尽量使用 `find_package` 导出的目标而不是裸变量。
+## 8. 一些疑问的汇总
+
+### 1. 关于cmake的install
+> 本质上他是把我们设置的install目标安装到制定目录
+- 一般默认安装到`/usr/local`或者是`C:/Program Files/<ProjectName>`
+- 在ubuntu中`/usr/local`里面bin是我们的项目编译出来的可执行文件,lib是对应的so文件,share里面是对应的cmake配置文件
+<img src="../_static/img/RM期间/image.jpg" alt="img_miss" style="zoom: 50%;"/>
+
+
+### 2.关于cmake的find_package
+- 场景引入
+
+```cmake
+cmake_minimum_required(VERSION 3.8)
+project(test_kinematics)
+find_package(OpenCV REQUIRED)
+
+add_executable(test main.cpp)
+target_include_directories(test PUBLIC
+  ${OpenCV_INCLUDE_DIRS}
+)
+target_link_libraries(test PRIVATE
+  ${OpenCV_LIBS}
+)
+```
+
+- 在这这个函数里面调用find_package会去找OpenCVConfig.cmake文件
+- 理论上来说我们使用源码编译安装的cmake项目都会在`/usr/local`中,下面看几个项目被安装之后设置的cmake配置文件
+```bash
+hitcrt@hitcrt-OMEN:/usr/local/share/eigen3/cmake$ ls
+Eigen3Config.cmake         Eigen3Targets.cmake
+Eigen3ConfigVersion.cmake  UseEigen3.cmake 
+
+hitcrt@hitcrt-OMEN:/usr/local/share/pcl-1.15$ ls
+Modules  PCLConfig.cmake  PCLConfigVersion.cmake
+
+```
+
+- find_package有两种模式
+  - 模块模式(找Find<PackageName>.cmake)  即module 模式,一般没有制定config的话是默认这个
+  - 配置模式(找<PackageName>Config.cmake) 即config 模式
+  
+> 我们要怎么在find_package之后使用这个包?
+
+- 以pcl为例子查看PCLConfig.cmake
+
+```cmake
+# ------------------------------------------------------------------------------------
+# Helper to use PCL from outside project
+#
+# Search for PCL:
+# Request all PCL modules:
+#   find_package(PCL CONFIG REQUIRED)
+# Or request only specific PCL modules:
+#   find_package(PCL CONFIG REQUIRED COMPONENTS xxx yyy)
+#
+# Link to PCL:
+# Link to all found PCL modules:
+#   target_link_libraries(my_fabulous_target ${PCL_LIBRARIES})
+# Or link only to specific modules:
+#   target_link_libraries(my_fabulous_target pcl_xxx pcl_yyy)
+#
+# Where xxx and yyy are module names from the following list:
+# 
+# - common
+# - kdtree
+# - octree
+# - search
+# - sample_consensus
+# - filters
+# - 2d
+# - geometry
+# - io
+# - features
+# - ml
+# - segmentation
+# - visualization
+# - surface
+# - registration
+# - keypoints
+# - tracking
+# - recognition
+# - stereo
+# - outofcore
+# - people
+#
+# Some additional variables are set by PCLConfig.cmake, which are not needed when
+# using the (modern) linking approach described above:
+# PCL_INCLUDE_DIRS is filled with PCL and available 3rdparty headers
+# PCL_LIBRARY_DIRS is filled with PCL components libraries install directory and
+# 3rdparty libraries paths
+#
+#                                   www.pointclouds.org
+#------------------------------------------------------------------------------------
+
+```
+
+### 3. 如果find_package找不到包怎么办?
+> 核心是要找到**Config.cmake**文件
+- 如果是源码安装,指定到build文件夹也ok,前提是build文件夹里面有对应的Config.cmake文件
+
+### 4. 小例子大战cmake
+> 参考 [xcy编写的cmake小实验](https://github.com/xcy963/Rise_of_the_Build_Warrior)
+
+### 5. 如果想要find_package找我们自己写的包怎么办?
+- 定位到我们包的`<PackageName>Config.cmake`文件
+```bash
+hitcrt@hitcrt-OMEN:~/libxcy/opencv-4.12.0/build$ ls OpenCVConfig.cmake
+OpenCVConfig.cmake
+hitcrt@hitcrt-OMEN:~/libxcy/opencv-4.12.0/build$ 
+```
+- 设置寻找opencv的环境变量(包名 + _DIR)
+```cmake
+set(OpenCV_DIR "$ENV{HOME}/libxcy/opencv-4.12.0/build")
+find_package(OpenCV 4.12 REQUIRED )
+
+message(STATUS "Use OpenCV version: ${OpenCV_VERSION}")
+message(STATUS "OpenCV include dirs: ${OpenCV_INCLUDE_DIRS}")
+message(STATUS "OpenCV libs: ${OpenCV_LIBS}")
+```
+

@@ -414,8 +414,78 @@ int main(){
 - 编译的指令
 ```bash
 g++ -g -O0 1.cpp -o test 
-objdump -d -S -l test > test.txt
+objdump -d -S -l test &> test.txt
 ```
 - 说明:这里objdump可以把二进制文件反汇编,方便我们之后查看
 
+```txt
 
+0000000000001229 <main>:
+main():
+/home/hitcrt/rust_learning/bochs/1.cpp:4
+#include<vector>
+//使用g++ -O0 -fno-stack-protector -fno-asynchronous-unwind-tables -fno-exceptions -nostdlib -nodefaultlibs -c 1.cpp -o test
+//objdump -d -M intel test.o
+int main(){
+    1229:	f3 0f 1e fa          	endbr64
+    122d:	55                   	push   %rbp  #返回地址
+    122e:	48 89 e5             	mov    %rsp,%rbp # 把rbp覆盖，让现在的rbp指向栈顶,栈顶在内存地址高位,之后使用bp-xx访问局部变量
+                                                        #栈高高的还有一个好处是他碰到堆的时候我们可以直接判断程序溢出
+    1231:	53                   	push   %rbx         #单纯是想要保护rbx
+    1232:	48 83 ec 38          	sub    $0x38,%rsp   #局部变量;留出空间
+
+    1236:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax 
+    123d:	00 00 
+    123f:	48 89 45 e8          	mov    %rax,-0x18(%rbp) #从fs段取出一个数,放到栈里面,返回时候判断又没有栈被破坏
+    1243:	31 c0                	xor    %eax,%eax        #异或,用来清零
+/home/hitcrt/rust_learning/bochs/1.cpp:5
+    int a = 10; 
+    1245:	c7 45 c4 0a 00 00 00 	movl   $0xa,-0x3c(%rbp)
+/home/hitcrt/rust_learning/bochs/1.cpp:7
+    std::vector<double> temp;
+    124c:	48 8d 45 d0          	lea    -0x30(%rbp),%rax
+    1250:	48 89 c7             	mov    %rax,%rdi
+    1253:	e8 e0 00 00 00       	call   1338 <_ZNSt6vectorIdSaIdEEC1Ev> #调用vector构造函数
+/home/hitcrt/rust_learning/bochs/1.cpp:8
+    temp.push_back(1.0);
+    1258:	f2 0f 10 05 c8 0d 00 	movsd  0xdc8(%rip),%xmm0        # 2028 <_IO_stdin_used+0x28>
+    125f:	00 
+    1260:	f2 0f 11 45 c8       	movsd  %xmm0,-0x38(%rbp)
+    1265:	48 8d 55 c8          	lea    -0x38(%rbp),%rdx
+    1269:	48 8d 45 d0          	lea    -0x30(%rbp),%rax
+    126d:	48 89 d6             	mov    %rdx,%rsi
+    1270:	48 89 c7             	mov    %rax,%rdi
+    1273:	e8 be 01 00 00       	call   1436 <_ZNSt6vectorIdSaIdEE9push_backEOd>
+/home/hitcrt/rust_learning/bochs/1.cpp:9
+    return 0;
+    1278:	bb 00 00 00 00       	mov    $0x0,%ebx
+/home/hitcrt/rust_learning/bochs/1.cpp:10
+    127d:	48 8d 45 d0          	lea    -0x30(%rbp),%rax
+    1281:	48 89 c7             	mov    %rax,%rdi
+    1284:	e8 53 01 00 00       	call   13dc <_ZNSt6vectorIdSaIdEED1Ev>
+    1289:	89 d8                	mov    %ebx,%eax
+    128b:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    128f:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1296:	00 00 
+    1298:	74 39                	je     12d3 <main+0xaa>
+    129a:	eb 32                	jmp    12ce <main+0xa5>
+    129c:	f3 0f 1e fa          	endbr64
+    12a0:	48 89 c3             	mov    %rax,%rbx
+    12a3:	48 8d 45 d0          	lea    -0x30(%rbp),%rax #temp的地址,这里对应的是析构函数
+    12a7:	48 89 c7             	mov    %rax,%rdi
+    12aa:	e8 2d 01 00 00       	call   13dc <_ZNSt6vectorIdSaIdEED1Ev>
+    12af:	48 89 d8             	mov    %rbx,%rax
+    12b2:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    12b6:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    12bd:	00 00 
+    12bf:	74 05                	je     12c6 <main+0x9d>
+    12c1:	e8 4a fe ff ff       	call   1110 <__stack_chk_fail@plt>
+    12c6:	48 89 c7             	mov    %rax,%rdi
+    12c9:	e8 62 fe ff ff       	call   1130 <_Unwind_Resume@plt>
+    12ce:	e8 3d fe ff ff       	call   1110 <__stack_chk_fail@plt>
+    12d3:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    12d7:	c9                   	leave
+    12d8:	c3                   	ret
+
+
+```
