@@ -1,4 +1,6 @@
 # 🐋docker入门
+## 魔法传送门🚪
+- <a href="#用vscode打开容器">用vscode打开容器</a>
 
 ## 一、Docker 是啥，能干嘛？
 
@@ -81,6 +83,7 @@ docker run -it --rm ubuntu:22.04 bash
 ```bash
 docker ps        # 正在运行的容器
 docker ps -a     # 包括已经退出的容器
+#这个和linux的ps很像
 ```
 
 ### 2. 停、启、删容器
@@ -318,5 +321,43 @@ export PS1='\[\e[0;32m\]\u@\h:\w\$ \[\e[0m\] '
 RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"' >> /root/.bashrc
 
 ```
+<a id="用vscode打开容器"></a>
+### 2. 我有一个容器里面安装了rust我要怎么在这个容器使用vscode的rust analyser
+```{note}
+其实其他的像是cpp的分析器也是通用的,我们这个相当于开一个vscode的远程服务器
+```
+- 在主页面创建.devcontainer/devcontainer.json
 
-### 2. 
+```json
+{
+  "name": "Rust in Docker",
+  // 用你的镜像名；如果你本地开 VS Code 时有环境变量 DOCKER_NAME，
+  "image": "rcore-docker",
+
+  // 对应 --network host
+  "runArgs": [
+    "--network",
+    "host"
+  ],
+  // VS Code 帮你挂载本机 workspace 到容器，这里我们手动指定成 /mnt
+  // 对应你的 -v ${PWD}:/mnt 和 -w /mnt
+  "workspaceFolder": "/mnt",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/mnt,type=bind"
+  ],
+  // 一般容器里是 root，如果你镜像里有别的用户可以改
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer"
+      ]
+    }
+  }
+}
+
+```
+
+```{note}
+之后想要在vscode里面打开ctrl + shift + p,输入 reopenInContainer
+```

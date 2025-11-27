@@ -10,3 +10,4 @@
    1🧱cmake
    2📐eigen
    3cpp
+   4数学基础

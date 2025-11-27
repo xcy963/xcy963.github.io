@@ -12,3 +12,4 @@
    4🔧Bochs的急流勇进
    5makefile的简单介绍
    6docker入门教程
+   7r-core实验
