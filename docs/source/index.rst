@@ -36,24 +36,6 @@
 
 
 
-.. raw:: html
-
-   <button id="live2d-trigger" type="button" class="live2d-trigger-btn" aria-controls="live2d-holder">
-     <span class="live2d-trigger-icon" aria-hidden="true"></span>
-     <span class="live2d-trigger-text">妙妙屋的奇妙咒语</span>
-   </button>
-
-.. raw:: html
-
-   <button id="live2d-expression-btn" type="button" class="live2d-peanut-btn" aria-label="播放花生表情" disabled>
-   
-     <span class="live2d-peanut-icon" aria-hidden="true">🥜</span>
-   </button>
-
-.. raw:: html
-
-   <div id="live2d-holder" aria-hidden="true"></div>
-
 每日任务一览表
 ----------------
 
@@ -72,3 +54,25 @@
    * - [ ] 
      - 📝 在文档里写下今天的关键收获
      - 10 分钟
+
+
+对于intel的高高低低:首地址对应数据低有效位(首地址对应右边开始数的位置)
+
+.. raw:: html
+
+   <button id="live2d-trigger" type="button" class="live2d-trigger-btn" aria-controls="live2d-holder">
+     <span class="live2d-trigger-icon" aria-hidden="true"></span>
+     <span class="live2d-trigger-text">妙妙屋的奇妙咒语</span>
+   </button>
+
+.. raw:: html
+
+   <button id="live2d-expression-btn" type="button" class="live2d-peanut-btn" aria-label="播放花生表情" disabled>
+   
+     <span class="live2d-peanut-icon" aria-hidden="true">🥜</span>
+   </button>
+
+.. raw:: html
+
+   <div id="live2d-holder" aria-hidden="true"></div>
+
