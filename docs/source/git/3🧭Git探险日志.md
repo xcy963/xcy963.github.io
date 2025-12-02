@@ -311,3 +311,24 @@ git rm --cached config/local.json
 
 ```
 
+### 2. 我创建了一个新的文件夹,我想要把他推送到云端仓库的一个分支anya怎么办
+
+```bash
+git remote add origin  https://~~~
+git branch -M anay #把当前的分支名字直接改成anya
+git push origin --set-upstream anay  #上游的名字也叫做这个,之后git push会自动处理名字的问题
+
+
+```
+
+### 3. 我在云端仓库有一个分支ch2,但是本地没有,我要怎么在本地切换?
+
+```{note} 
+
+注意不要加上-b选项
+
+```
+
+```bash
+git checkout ch2
+```

@@ -1,13 +1,13 @@
 
-# ⏱️ **C++ 时间与线程同步笔记（std::chrono & 条件变量）**
+# ⏱️ **cpp的基础**
 
-> 涵盖：时间表示、时间戳转换与格式化、定时与超时；以及条件变量 + mutex 的线程同步模式。
 
 ## 魔法传送门
 - <a href="#system_clock转字符串">system_clock转字符串</a>
 
 - <a href="#cpp多线程简单介绍">cpp多线程简单介绍</a>
 
+- <a href="#格式化字符串">cpp的格式化字符串</a>
 
 ---
 
@@ -438,3 +438,48 @@ private:
 * 固定周期任务（控制循环）；
 * 可以被外部唤醒（`notifyWork()`）立即处理某些事；
 * 析构时安全退出线程。
+
+
+<a id="格式化字符串"></a>
+
+## 11. cpp的格式化字符串
+
+- 想要在cmake里面引入格式化字符串,一定要cpp标准大于20
+
+```cmake
+set(CMAKE_CXX_STANDARD 20)
+```
+
+- 基础格式化
+
+```cpp
+int x = 42;
+double pi = 3.14159;
+std::string formatted_str = std::format("The answer is {} and Pi is {:.2f}", x, pi);
+//这个的输出是: The answer is 42 and Pi is 3.14
+
+```
+
+- 对于自定义的类型
+
+```cpp
+struct Point {
+    int x, y;
+};
+
+template <>
+struct std::formatter<Point> : std::formatter<std::string> {
+    // 格式化自定义类型 Point
+    auto format(const Point& p, std::format_context& ctx) {
+        return std::formatter<std::string>::format("({}, {})", p.x, p.y, ctx);
+    }
+};
+
+int main() {
+    Point p = {3, 4};
+    std::cout << std::format("Point: {}", p) << std::endl;  // Point: (3, 4)
+    return 0;
+}
+
+```
+

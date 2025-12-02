@@ -296,6 +296,24 @@ build_docker:
 
 ---
 
+## 9.1Docker Compose的简单介绍
+
+```{note}
+docker compose可以用于定义和管理多个 Docker 容器的服务
+```yaml
+version: '3'
+services:
+  # 定义多个服务，每个服务都对应一个容器
+  service_name:
+    # 服务的具体配置
+networks:
+  # 定义网络
+volumes:
+  # 定义数据卷
+```
+
+- 如果想要容器开机自动启动，在compose的服务具体配置里加上`restart: always`
+
 ## 十、问题收集
 
 ### 1. 发现docker容器里面的bash程序提示词颜色不对
@@ -361,3 +379,5 @@ RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\
 ```{note}
 之后想要在vscode里面打开ctrl + shift + p,输入 reopenInContainer
 ```
+
+### 3. 容器有自己的磁盘吗？我如果不删除他他会有存储空间的浪费吗？
