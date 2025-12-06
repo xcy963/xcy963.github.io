@@ -155,6 +155,20 @@ make clean  # 清理
 
 
 
+## 疑问汇总
+
+### 1. 我输出的文件名为什么是os.bin?我明明只是看到了`$@`这个奇葩符号啊
+
+```makefile
+$(KERNEL_BIN): kernel
+    @$(OBJCOPY) $(KERNEL_ELF) --strip-all -O binary $@
+```
+
+```{note}
+这个`$@`是自动变量,在这里他就是构建目标的任务名称$(KERNEL_BIN),-O binary 不是说输出是一个binary的文件,而是说输出是二进制格式
+```
+
+
 
 [1]: https://blog.csdn.net/tekin_cn/article/details/144305864?utm_source=chatgpt.com "Makefile 基础语法，默认目标设置，伪目标.PHONY的作用和 ..."
 [2]: https://web.mit.edu/gnu/doc/html/make_4.html?utm_source=chatgpt.com "GNU Make - Writing Rules"
