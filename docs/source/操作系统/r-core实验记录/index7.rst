@@ -9,6 +9,11 @@
 
    r-core实验1
    r-core实验2
+   r-core实验3
+   r-core实验4
+   r-core实验4-2
+
+
 
 
    

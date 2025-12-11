@@ -235,7 +235,7 @@ cpu有个机制(就是缓存,amd擅长的那个小妙招),我们不同的应用�
 
 ### 1. ld脚本
 
-```ld
+```txt
 OUTPUT_ARCH(riscv)
 ENTRY(_start)
 

@@ -98,7 +98,7 @@ $(patsubst <pattern>, <replacement>, <text>)
   - 凡是匹配到的，就用 `<replacement>` 按模式替换。
 
 - `eg`:
-```makefile
+```txt
 SRC := foo.c bar.c baz.c
 OBJ := $(patsubst %.c, %.o, $(SRC))
 # 结果：OBJ = foo.o bar.o baz.o
@@ -115,7 +115,7 @@ cp $(elf) $(patsubst $(TARGET_DIR)/%, $(TARGET_DIR)/%.elf, $(elf));)
 ## 关于执行的流程
 
 ### 定义entry.asm
-```tip
+```{tip}
 - `call`和`la`都是伪指令,这也解释了为什么call之后还能再回来eg`call rust_main`其实是`jal ra, rust_main`
 - mangle是在把函数名编译到汇编时,编译成为乱七八糟的名字的那个选项
 ```
@@ -204,7 +204,7 @@ boot_stack_top:     # <-- 栈顶（高地址）
 ```
 
 
-```t
+```txt
 [rustsbi] RustSBI version 0.3.0-alpha.4, adapting to RISC-V SBI v1.0.0
 .______       __    __      _______.___________.  _______..______   __
 |   _  \     |  |  |  |    /       |           | /       ||   _  \ |  |
