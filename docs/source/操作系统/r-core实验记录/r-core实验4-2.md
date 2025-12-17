@@ -85,10 +85,14 @@ pub struct MemorySet {
 - 确实是映射了整个内存,但是页表似乎效率还行,分析一下
     - 内存从`0x80000000..0x88000000`一共128MB
     - `offset`一共12bit,也就是4kB使用一个`entry`
-    - 一共需要32K个PTE,`SV39`是树结构,深度为4,节点数一共1+1+128+32k,每个节点是8B,大约是256KB
+    - 一共需要$32K=2^{15}$个ppn,`SV39`是树结构,深度为4,需要$1+1+64$个页面,也就是$66*4KB=264KB$,只需要这么多就可以映射整个128MB的内存
 - 总结:只是使用几百KB,正常的操作系统会支持大页,会更小
 - 说页表全满需要很大的内存,但是全开就能找到$2^{39}B = 2^{9}GB$,这么多使用几个G也正常
 
+**sv39对于只是使用了地址的39位,但是地址有64位,这个是不是浪费了**
+- 本身寄存器是64位的,(物理地址会用不止39位,所以不能改小寄存器)
+- 如果优化使用48位?,那么恭喜你发明了`sv48`,然后我们的cpu就需要多查一次页表了,也就是4级页表,事实上sv39支持的寻址是$2^{39}B=512GB$
+    - ps:截止2025年,计算机整体内存还停留在几百个GB的级别,所以一个应用占用`512GB`的空间是几乎不可想象的,也就是说3级页表是完全够用的
 
 ```
 
@@ -305,3 +309,88 @@ __restore:
 在用户态记录trap的寄存器是`stvec(Supervisor Trap Vector Base Address Register)`
 
 这个设置为`__alltraps`的地址,返回`rust写的trap_handler函数`
+
+
+## 7疑问:页表一级和二级页表占用的是一个页面吗?所以如果页表只有一个地址,占据的内存是多大?
+
+- 首先需要说明`FRAME_ALLOCATOR`锁定的是页面,而不是单个字节
+```rust
+//为了证明上面所说的,我们来看他的初始化代码
+FRAME_ALLOCATOR.exclusive_access().init(
+    PhysAddr::from(ekernel as usize).ceil(),
+    PhysAddr::from(MEMORY_END).floor(),
+);
+
+pub fn floor(&self) -> PhysPageNum {
+    PhysPageNum(self.0 / PAGE_SIZE)
+}//这里可以看出,填入的地址是一个页面,当然由于内存一般是2的倍数,所以最后一个页面是完整的,也就是说不会有多余的内存没被`ALLOCAT`
+```
+- 其次当我们的页表遇到一个没有初始化的pte,他会alloc一个页面
+```rust
+if !pte.is_valid() {
+    let frame = frame_alloc().unwrap();
+    *pte = PageTableEntry::new(frame.ppn, PTEFlags::V);
+    self.frames.push(frame);
+}
+```
+- 所以结论是在一个三级页表中插入一个映射,会使用3个页面,也就是$3*2^{12}B$,也就是每一个链表传递都依赖一个页面
+- 这个也解释了`sv39`为什么要设计每级页表的ppn是$9$,而一个页是$2^{12}$
+  - 因为一个pte是$8B$,一级页表是$2^{9}$个pte,所以正好占据一个页$8B*2^{9}=2^{12}$
+
+## 8疑问:用户的页表放在哪里?
+- 每个应用初始化的时候都会有一个页面,作为页表的起始地址,他可以是任意一个页面
+
+## 作业
+
+```{note}
+这个里面统一需要做什么(用户端的逻辑)
+```
+
+
+### 1关于`sys_get_time`
+
+- 用户认为侧认为的逻辑:我传入一个地址参数arg[0],系统调用会把时间写到这个地址里面
+- 问题:传入的是虚拟地址,这个时候是内核态,如果直接解这个地址,使用的是内核的页表,肯定不行
+  - 还有个问题是应用虚拟内存对应的页面可能是离散的,所以无论如何都需要还原用户的页表
+- 解决方法:使用`translated_byte_buffer`函数,也就是重新构造内核的页表
+
+```{note}
+恢复用户态的页表也就是需要恢复寄存器`satp`,简单说下构成
+
+- 高四位`[63:60]` 是 MODE 字段
+    - MODE = 8 表示 Sv39
+- 低部分是根页表的ppn(在`sv39`ppn是56位的),这样放也够用,如果是其他级别的页表会更多
+```
+
+### 2关于`sys_trace`
+
+- 用户认为的逻辑:
+  - 使用`systrace`完成三个事情读和写,还有记录某个系统调用的使用次数的操作(使用`trace_request`标记)
+  - 如果是读或者写:
+    - 传入`id`是addr,data是要写的值,返回是成功与否
+
+### 3关于map和ummap
+
+- `start`: 希望映射到的起始虚拟地址
+- `len`: 映射长度（字节）
+- `prot`: 权限标志（位掩码），常见是：
+  - `PROT_READ`, `PROT_WRITE`, `PROT_EXEC`（以及可能还有 PROT_NONE）
+```rust
+
+pub fn sys_mmap(start: usize, len: usize, prot: usize) -> isize {
+    trace!("kernel: sys_mmap");
+    task_mmap(start, len, prot)
+}
+```
+
+```{important}
+**在rust里面循环介绍**
+- 1. 左闭右开 `start_vpn.0..end_vpn.0`
+- 2. 左开右闭 `start_vpn.0..=end_vpn.0`
+
+        
+**debug可以使用`println!`**
+```
+
+## 最后的总结
+

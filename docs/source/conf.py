@@ -25,6 +25,7 @@ extensions = [
     'myst_parser',
     'sphinx.ext.mathjax',
     'sphinx_multiversion', 
+    'sphinx.ext.imgconverter',
     
 ]
 

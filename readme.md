@@ -76,3 +76,10 @@ oxipng -o 4 --strip all --alpha ANIYA.1024/texture_*.png #这是用cargo安装�
 
 ## html
 - 使用标签查找的相当神奇的语言,到时候写个文档
+
+
+## 想要制作gif
+
+```bash
+ffmpeg -i 1.webm 1.gif
+```
