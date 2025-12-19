@@ -7,6 +7,7 @@
    :maxdepth: 1
    :caption: 操作系统:
 
+   risc-v寄存器介绍
    r-core实验1
    r-core实验2
    r-core实验3

@@ -382,6 +382,9 @@ pub fn sys_mmap(start: usize, len: usize, prot: usize) -> isize {
     task_mmap(start, len, prot)
 }
 ```
+- 这里关于权限的说明
+  - `prot`:三位二进制右往左分别是 read write exec
+
 
 ```{important}
 **在rust里面循环介绍**

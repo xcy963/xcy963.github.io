@@ -381,3 +381,12 @@ RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\
 ```
 
 ### 3. 容器有自己的磁盘吗？我如果不删除他他会有存储空间的浪费吗？
+
+### 4. 容器可以使用compose文件管理,我使用命令怎么没用
+
+- 要在对应的目录使用
+```bash
+docker compose down
+docker compose up -d   # 这次只是为了按新配置重建一次
+docker compose stop    # 停掉它
+```
