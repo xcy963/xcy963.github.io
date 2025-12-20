@@ -8,12 +8,15 @@
    :caption: 操作系统:
 
    risc-v寄存器介绍
+   rust线程安全简单介绍
    r-core实验1
    r-core实验2
    r-core实验3
    r-core实验4
    r-core实验4-2
    r-core实验5
+   r-core实验6
+
 
 
 
