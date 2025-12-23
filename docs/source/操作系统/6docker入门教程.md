@@ -336,7 +336,7 @@ export PS1='\[\e[0;32m\]\u@\h:\w\$ \[\e[0m\] '
 ```{tip}
 如果使用的是Dockerfile创建容器,那么还可以在Dockerfile里面添加下面一行
 ```txt
-RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"' >> /root/.bashrc
+RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /root/.bashrc
 
 ```
 <a id="用vscode打开容器"></a>
@@ -389,4 +389,16 @@ RUN echo 'export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\
 docker compose down
 docker compose up -d   # 这次只是为了按新配置重建一次
 docker compose stop    # 停掉它
+```
+
+
+### 5. dockerbuild网络错误,但是我在终端可以和仓库网站通信啊?
+
+- 还是得设置docker的代理
+- 在
+```bash
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:7897"
+Environment="HTTPS_PROXY=http://127.0.0.1:7897"
+
 ```
