@@ -16,6 +16,9 @@
    r-core实验4-2
    r-core实验5
    r-core实验6
+   r-core实验7
+   r-core实验8
+
    实验汇总
 
 
