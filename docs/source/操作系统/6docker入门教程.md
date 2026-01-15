@@ -2,6 +2,18 @@
 ## 魔法传送门🚪
 - <a href="#用vscode打开容器">用vscode打开容器</a>
 
+
+```{note}
+
+你估计是在找这个,把这些放到.bashrc里面
+```bash
+echo "
+source /usr/share/bash-completion/bash_completion
+export PS1=" \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
+" >>>> /root/.bashrc
+```
+
 ## 一、Docker 是啥，能干嘛？
 
 一句话版：
