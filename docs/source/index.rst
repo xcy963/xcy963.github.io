@@ -27,10 +27,11 @@
    测试使用/index1
    rust/index2
    git/index3
+   数学基础/index7.rst
    RM期间/index3.rst
    操作系统/index4
-   ai_agent/index5_1
-
+   计算机网络/index8.rst
+   app开发_flutter/index6.rst
 
 
 **M-I-C-K-E-Y M-O-U-S-E~~**

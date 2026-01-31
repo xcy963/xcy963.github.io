@@ -10,7 +10,6 @@
    1🧱cmake
    2📐eigen
    3cpp
-   4数学基础
    5ros2
    6轨迹优化
    7linux终端语法

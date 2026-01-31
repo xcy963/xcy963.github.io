@@ -83,3 +83,6 @@ oxipng -o 4 --strip all --alpha ANIYA.1024/texture_*.png #这是用cargo安装�
 ```bash
 ffmpeg -i 1.webm 1.gif
 ```
+
+## 如果想要快速插入图片
+- 首先安装拓展`telesoho.vscode-markdown-paste-image`
