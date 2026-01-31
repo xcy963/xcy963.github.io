@@ -1,46 +1,60 @@
 {
   "markdown.preview.math.enabled": true,
+  "MarkdownPaste.autoSelectClipboardType": "image",
+  "MarkdownPaste.autoSelectClipboardTypePriority": [
+    "image",
+    "html",
+    "text"
+  ],
+  "MarkdownPaste.enableImgTag": true,
   "MarkdownPaste.path": "${workspaceFolder}/docs/source/_static/img",
   "MarkdownPaste.imageRules": [
     {
       "match": ".*/docs/source/计算机网络/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/计算机网络/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/计算机网络/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/数学基础/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/数学基础/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/数学基础/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/app开发_flutter/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/app开发_flutter/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/app开发_flutter/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/操作系统/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/操作系统/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/操作系统/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/测试使用/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/测试使用/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/测试使用/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/git/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/git/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/git/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/RM期间/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/RM期间/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/RM期间/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     },
     {
       "match": ".*/docs/source/rust/.*",
       "targetPath": "${workspaceFolder}/docs/source/_static/img/rust/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}",
-      "linkPattern": "<img src=\"../_static/img/rust/${fileBasenameNoExtension}_${datetime|yyyy-MM-DD_HH-mm-ss}.png\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
+      "linkPattern": "<img src=\"${imageFilePath}\" alt=\"img_miss\" style=\"zoom: 30%;\"/>"
     }
-  ]
+],
+"ROS2.distro": "jazzy",
+"python.autoComplete.extraPaths": [
+    "/opt/ros/jazzy/lib/python3.12/site-packages"
+],
+"python.analysis.extraPaths": [
+    "/opt/ros/jazzy/lib/python3.12/site-packages"
+]
 }

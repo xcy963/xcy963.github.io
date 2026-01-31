@@ -1,0 +1,12 @@
+out/
+node_modules/
+npm-debug.log*
+*.vsix
+.vscode-test/
+out_test/
+_jest-editor/
+.vscode/symbols.json
+/coverage/
+generated-icons/
+*.zip
+/pnpm-lock.yaml

@@ -1,0 +1,13 @@
+{
+  "extends": "./ts-config.base.json",
+  "compilerOptions": {
+    "module": "Node16",
+    "target": "ES2021",
+    "lib": ["ES2021"],
+    "noUnusedLocals": false,
+    "outDir": "out_test",
+    "sourceMap": true
+  },
+  "include": ["test/**/*"],
+  "exclude": ["node_modules", "scripts"]
+}

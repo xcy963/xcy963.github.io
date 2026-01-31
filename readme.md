@@ -85,4 +85,14 @@ ffmpeg -i 1.webm 1.gif
 ```
 
 ## 如果想要快速插入图片
-- 首先安装拓展`telesoho.vscode-markdown-paste-image`
+
+- 1. 下载xclip和xdotool,实现终端和剪贴板的互通
+```bash
+sudo apt-get update
+sudo apt-get install -y xclip xdotool
+
+```
+
+- 2. 安装拓展`telesoho.vscode-markdown-paste-image`
+- 3. 我使用的快捷键是`Ctrl+Alt+V`,这样还会弹出一个框让我输入文件的名字
+

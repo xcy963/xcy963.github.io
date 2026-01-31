@@ -1,0 +1,9 @@
+[
+
+  {
+    "key": "ctrl+alt+v",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Paste Image Smart",
+    "when": "editorTextFocus && editorLangId =~ /^markdown$|^rmd$|^quarto$|^mdx$/"
+  }
+]
