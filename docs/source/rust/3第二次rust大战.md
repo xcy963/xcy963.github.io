@@ -417,6 +417,18 @@ fn main() {
 }
 ```
 
+- **如果想要做字符串比较**
+
+```rust
+//最好转化为&str,这个类型不会有所有权等等问题
+if let Some(fsname) = fstype.as_deref() {//转化成字符串引用
+    if fsname == "error" || fsname == "overlay" {
+        return ENODEV;
+    }
+}
+```
+
+
 - 相互转化
 ```rust
 fn main() {
@@ -1018,10 +1030,17 @@ fn main() {
 
 ```
 
+```{important}
+ARC指针只是解决了多线程冲突里面的数据计数问题,没有解决同时写的那些临界区的控制问题,所以上面的例子也没有真正去写数据
+- 其实只是解决了所有权的问题,因为rust约定在move进去一个线程的时候要交接所有权
+```
+
 ### 写时复制cow
 
 ```{tip}
 cow和rc的区别是cow不是复制指针,他是复制数据,所以他没有共享计数,在初始化之后指针类型是Owned,有更改需求就触发复制,指针类型是Borrowed
+- 由于这里构造cow的时候持有了对象的引用,所以后续不能修改对应对象,保证了cow指针指向的数据不会变化
+
 ```
 
 
@@ -1157,3 +1176,26 @@ fn main() {
 ```
 
 
+
+## lazy_static懒加载
+
+- 正常是一个宏来控制一些变量只有在第一次用到的时候才加载,通常用于简化static变量的使用流程
+
+```rust
+lazy_static! {
+    pub static ref INITPROC: Arc<ProcessControlBlock> = {
+        let inode = open_file("/user/init_proc.bin", OpenFlags::RDONLY).unwrap();
+        let data = inode.read_all();
+        ProcessControlBlock::new(&data)
+    };
+}
+
+```
+
+
+- 当然如果在某个地方想要直接加载也可以使用
+
+```rust
+lazy_static::initialize(&INITPROC);//确保加载
+
+```
